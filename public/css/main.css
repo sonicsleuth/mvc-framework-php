@@ -1,0 +1,45 @@
+/* Main CSS */
+body {
+    width: 800px;
+    margin: 40px auto;
+    font-family: 'Droid Sans', sans-serif;
+    font-size: 12pt;
+    font-weight: 400;
+    color: #666666;
+}
+header {
+    color: #333;
+}
+footer {
+    color: #999999;
+}
+hr {
+    margin: 20px 0px 30px 0px;
+}
+h1, h2, h3 {
+    font-weight: 700;
+    color: #000;
+}
+h1 {
+    font-size: 3em;
+}
+h2  {
+    font-size: 2em;
+}
+h3 {
+    font-size: 1.5em;
+    margin: 40px 0px 10px 0px;
+}
+p {
+    line-height: 1.5em;
+    padding-bottom: 20px;
+}
+ul li {
+    list-style-type: circle;
+    padding: 5px 0px;
+    margin-left: 30px;
+    line-height: 1.5em;
+}
+strong {
+    font-weight: 700;
+}
