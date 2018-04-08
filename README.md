@@ -17,7 +17,8 @@
 
 ## Documentation
 
-###Introduction
+## Introduction
+
 In object-oriented programming development, model-view-controller (MVC) is the name of a methodology or design pattern for successfully and efficiently relating the user interface to underlying data models.
 
 The MVC pattern has been heralded by many developers as a useful pattern for the reuse of object code and a pattern that allows them to significantly reduce the time it takes to develop applications with user interfaces.
@@ -28,12 +29,14 @@ The model-view-controller pattern has three main components or objects to be use
 * A View , which is a collection of classes representing the elements in the user interface (all of the things the user can see and respond to on the screen, such as buttons, display boxes, and so forth).
 * A Controller , which represents the classes connecting the model and the view, and is used to communicate between classes in the model and view.
 
-### Requirements
+## Requirements
+
 * A general understanding of Object-Oriented Programming using PHP.
 T* he PHP PDO-Library for database connectivity.
 * PHP-5.6 > (but future enhancements are leaning towards php7)
 
-### Features of this MVC Framework
+## Features of this MVC Framework
+
 * Easy Configuration with the use of individual config files, like database, routes, etc.
 * Routing which is the method in which you specify the URLs that will load your pages, for example:
     * Get a user: http://www.example.com/user/list
@@ -73,7 +76,8 @@ root
         .htaccess - URL routing to the front-loader
 ```
 
-##URL Routing
+## URL Routing
+
 By default, a URL has a one-to-one relationship to the Controller and Method called which has the following format:
 ```
 http://example.com/controller/method/param1/param2
@@ -130,7 +134,8 @@ $route['product/(:num)'] = 'catalog/product_lookup_by_id/$1';
 ```
 A URL with “product” as the first segment, and a number in the second will be remapped to the “catalog” controller class and the “product_lookup_by_id” method passing in the match as a variable to the method.
 
-##Models
+## Models
+
 Models that you create must be stored in the /app/models/ directory and MUST use a CamelCase.php file naming format. The Class name MUST also be named identically as the file name like so:
 ```
 class CameCase extends Model
@@ -154,7 +159,8 @@ class User extends Model
     public function getUsers()
     {
 ```
-##Views
+## Views
+
 Views are the presentation part of the MVC pattern and as such they define design/layout of the page. A typical View might look like the following:
 
 Sometimes you may have reusable parts of your page such as a header and footer. The View Helper loads by default and allows you to "extend" your View. In this example, we are adding the common header and footer View fragments by specifying their location in the sub-directory called "common" within the Views directory, located here: /app/views/common/
@@ -182,7 +188,8 @@ extend_view(['reports/daily/common/header'], $data)
 extend_view(['reports/weekly/common/header'], $data)
 ```
 
-##Controllers
+## Controllers
+
 To understand how Controllers work we need to back up a little bit and recall how we format a URL. For this example lets say we need to query information about a user and display the information on a report.
 ```
 http://www.acme.com/user/report/123
