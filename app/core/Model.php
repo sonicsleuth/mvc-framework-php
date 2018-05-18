@@ -11,6 +11,8 @@
  * @update 1.0.5 updated run() function to return last record id on insert, and affected records for update or delete.
  *
  * @update 1.0.7 HTML Entities returned from the database will be decoded by default when calling select() or run() methods.
+ * 
+ * @update 1.0.8 Return FALSE if no data found when using select() method.
  */
 
 use PDO;
@@ -116,12 +118,13 @@ class Model extends PDO {
 
         $data = $this->run($sql, $bind);
 
-        if (count($data) > 1) {
+        if(empty($data)) {
+            return false;
+        } elseif (count($data) > 1) {
             return $data; // return full index of records.
         } else {
             return $data[0]; // return single record.
         }
-
     }
 
     /**
