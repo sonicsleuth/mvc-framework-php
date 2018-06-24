@@ -118,7 +118,7 @@ class Model extends PDO {
             $sql .= " WHERE " . $where;
         $sql .= ";";
 
-        $data = $this->run($sql, $bind);
+        $data = $this->run($sql, $bind, $entity_decode);
 
         if(empty($data)) {
             return false;
@@ -143,9 +143,9 @@ class Model extends PDO {
      * 
      * Note: HTML Entities returned from the database will be decoded by default. Set $entity_decode = false otherwise.
      */
-    public function selectExtended($sql, $bind = "", $entity_decode)
+    public function selectExtended($sql, $bind = "", $entity_decode = true)
     {
-        $data = $this->run($sql, $bind);
+        $data = $this->run($sql, $bind, $entity_decode);
 
         if(empty($data)) {
             return false;
