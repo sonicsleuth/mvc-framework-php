@@ -120,11 +120,39 @@ class Model extends PDO {
 
         if(empty($data)) {
             return false;
-        } elseif (count($data) > 1) {
+        } elseif (count($data[0]) > 1) {
             return $data; // return full index of records.
         } else {
             return $data[0]; // return single record.
         }
+    }
+
+    /**
+     * @param string $sql
+     * @param string $bind
+     * @param bool $entity_decode
+     * 
+     * Use this method when complex SQL statements are required, like table JOINS, are required.
+     * 
+     * Example:
+     * $sql = "select * from users u join preferences p on p.user_id = u.id where p.role = :role ";
+     * $bind = array (':role' => 'admin');
+     * $results = $this->db->selectExtended($sql, $bind);
+     * 
+     * Note: HTML Entities returned from the database will be decoded by default. Set $entity_decode = false otherwise.
+     */
+    public function selectExtended($sql, $bind = "", $entity_decode)
+    {
+        $data = $this->run($sql, $bind);
+
+        if(empty($data)) {
+            return false;
+        } elseif (count($data[0]) > 1) {
+            return $data; // return full index of records.
+        } else {
+            return $data[0]; // return single record.
+        }
+
     }
 
     /**
