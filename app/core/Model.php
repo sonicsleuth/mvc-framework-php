@@ -106,6 +106,8 @@ class Model extends PDO {
      *      ":search" => "%$search"
      * );
      * $results = $this->db->select("mytable", "FName LIKE :search", $bind);
+     * 
+     * One or more records are returned as array of array.  If no records found, FALSE is returned.
      *
      * Note: HTML Entities returned from the database will be decoded by default. Set $entity_decode = false otherwise.
      */
