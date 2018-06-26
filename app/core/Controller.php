@@ -33,8 +33,10 @@ class Controller
         if(file_exists(VIEWS_PATH . $view . '.php'))
         {
             // Set each index of data to its named variable.
-            foreach($data as $key => $value) {
-                $$key = $value;
+            if( is_array($data[0]) ) {
+                foreach($data[0] as $key => $value) {
+                    $$key = $value;
+                }
             }
             require_once VIEWS_PATH . $view . '.php';
         } else {
