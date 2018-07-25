@@ -148,7 +148,7 @@ class App
                 case 'PATH_INFO':
                     if(isset($_SERVER['PATH_INFO']))
                     {
-                        $this->url_string = $this->remapUrl(filter_var(rtrim($_SERVER['PATH_INFO'], '/', FILTER_SANITIZE_URL)), $route);
+                        $this->url_string = $this->remapUrl(filter_var(rtrim($_SERVER['PATH_INFO']), '/', FILTER_SANITIZE_URL), $route);
                         return $url = explode('/', $this->url_string);
                     } else {
                         return array();
