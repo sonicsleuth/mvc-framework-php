@@ -15,8 +15,10 @@
  * @update 1.0.8 Return FALSE if no data found when using select() method.
  */
 
+/* PDO is automatically included in PHP 7.2+, otherwise uncomment the following lines.
 use PDO;
 use PDOException;
+*/
 
 class Model extends PDO {
 

@@ -35,8 +35,11 @@
 <h3>Requirements</h3>
 <ul>
     <li>A general understanding of Object-Oriented Programming using PHP.</li>
-    <li>The PHP PDO-Library for database connectivity.</li>
-    <li>PHP-5.6 &gt; (but future enhancements are leaning towards php7)</li>
+    <li>Optimize for PHP-7.2, but will run PHP-5.6+</li>
+    <li>The PHP PDO-Library for database connectivity. <br />
+        <em>If using less-than PHP-7.2, uncomment lines 19, 20 of /app/core/Model.php (ie: the USE PDO lines) </em>
+    </li>
+    
 </ul>
 
 <h3>Features of this MVC Framework</h3>
