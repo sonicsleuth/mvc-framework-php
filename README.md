@@ -11,7 +11,7 @@
 * Dependencies
     * A general understanding of Object-Oriented Programming using PHP.
     * The PHP PDO-Library for database connectivity.
-    * PHP-5.6 > (but future enhancements are leaning towards php7)
+    * PHP 7.2, but should work with minimal change for PHP 5.6.
 * Database configuration - see /app/config/database.php
 * General Configuration - see /app/config/*
 
@@ -62,6 +62,7 @@ root
             view.php
         /models
             Users.php - a sample data model
+            Sessions.php - database managed PHP Sessions
         /views
             /common
                 footer.php - footer of this page
@@ -245,6 +246,67 @@ Why offer both options? because developers have preferences on style.
 * If your Controller class is located in a sub-directory within the **/apps/controllers/** directory you must specify it in the URL like so **/directory/user-history/method/param1/param2**
 
 However, you may also use custom routing to hide a sub-directory. See the **Routing** section above.
+
+## Sessions
+
+Session data can be managed using the Session Model within your Controllers making this data persist between browser sessions.
+
+The Session Model will initally check if a Session Cookie exists, and if so, the PHP Session will be loaded with the data stored in the database. If no Session Cookie exists, then a new Session database record and cookie will be generated.
+
+The following example is available by visiting here: /docs/session 
+Note: You must first set up your database, see below.
+
+```
+class Docs extends Controller() 
+{
+    public function session()
+    {
+        // Add the following line to enable database sessions.
+        $session = $this->model('Session');
+
+        // Use PHP Sessions like normal.
+        $_SESSION['fname'] = 'Walter';
+        $_SESSION['lname'] = 'Smith';
+        $_SESSION['title'] = 'Sales Manager';
+
+        // For debugging needs, use the getSessionData() function.
+        echo "GET ALL SESSION DATA:";
+        $data = $session->getSessionData();
+        print_r($data);
+
+    }
+}
+```
+
+Loading the url (http://localhost/docs/session) will generate the following output:
+
+```
+GET ALL SESSION DATA:
+
+Array
+(
+    [0] => Array
+        (
+            [session_id] => 262d5637c3e56a577a6ca3aab4df5466
+            [session_data] => fname|s:6:"Walter";lname|s:5:"Smith";title|s:13:"Sales Manager";
+            [session_lastaccesstime] => 2018-08-13 20:47:23
+        )
+
+)
+```
+
+Setting up your database:
+* Apply your database configurations here /app/config/database.php
+* Create the following MySQL table in your database.
+
+```
+CREATE TABLE sessions ( 
+        session_id CHAR(32) NOT NULL, 
+        session_data TEXT NOT NULL, 
+        session_lastaccesstime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+        PRIMARY KEY (session_id)
+    );
+```
 
 (end of documentation)
 
