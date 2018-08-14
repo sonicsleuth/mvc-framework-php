@@ -17,4 +17,20 @@ class Docs extends Controller
         echo phpinfo();
     }
 
+    public function session()
+    {
+        $session = $this->model('Session');
+
+        $_SESSION['fname'] = 'Walter';
+        $_SESSION['lname'] = 'Smith';
+        $_SESSION['title'] = 'Sales Manager';
+
+        echo "<pre>";
+        echo "GET ALL SESSION DATA:";
+        echo "\r\n\r\n ";
+        $data = $session->getSessionData();
+        print_r($data);
+
+    }
+
 }

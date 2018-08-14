@@ -334,6 +334,75 @@ echo $name // also outputs "Bob Smith"</code></pre>
 * However, you may also use custom routing to hide a sub-directory. See the <a href="#routing">Routing section</a> above.
 </p>
 
+<h3>Sessions</h3>
+<p>
+Session data can be managed using the Session Model within your Controllers making this data persist between browser sessions. 
+</p>
+<p>
+The Session Model will initally check if a Session Cookie exists, and if so, the PHP Session will be loaded with the data stored 
+in the database. If no Session Cookie exists, then a new Session database record and cookie will be generated.
+</p>
+<p>
+The following example is available by visiting here: <a href="/docs/session">/docs/session</a> 
+<br />Note: You must first set up your database, see below.
+</p>
+<pre><code class="language-php">
+class Docs extends Controller() 
+{
+    public function session()
+    {
+        // Add the following line to enable database sessions.
+        $session = $this->model('Session');
+
+        // Use PHP Sessions like normal.
+        $_SESSION['fname'] = 'Walter';
+        $_SESSION['lname'] = 'Smith';
+        $_SESSION['title'] = 'Sales Manager';
+
+        // For debugging needs, use the getSessionData() function.
+        echo "GET ALL SESSION DATA:";
+        $data = $session->getSessionData();
+        print_r($data);
+
+    }
+}
+</code></pre>
+<br />
+<p>Loading the url (http://localhost/docs/session) will generate the following output:</p>
+
+<pre><code class="language-text">
+GET ALL SESSION DATA:
+
+Array
+(
+    [0] => Array
+        (
+            [session_id] => 262d5637c3e56a577a6ca3aab4df5466
+            [session_data] => fname|s:6:"Walter";lname|s:5:"Smith";title|s:13:"Sales Manager";
+            [session_lastaccesstime] => 2018-08-13 20:47:23
+        )
+
+)
+</code></pre>
+<br />
+<p>
+<strong>Setting up your database:</strong>
+<ul>
+<li>Apply your database configurations here /app/config/database.php</li>
+<li>Create the following MySQL table in your database. </li>
+</ul>
+</p>
+
+<pre><code class="language-text">
+CREATE TABLE sessions ( 
+        session_id CHAR(32) NOT NULL, 
+        session_data TEXT NOT NULL, 
+        session_lastaccesstime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+        PRIMARY KEY (session_id)
+    );
+</code></pre>
+
+
 <?php extend_view(['common/footer'], $data) ?>
 <?php load_script(['prism', 'main']); ?>
 </body>
