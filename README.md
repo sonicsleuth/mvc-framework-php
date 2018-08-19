@@ -2,7 +2,7 @@
 
 # MVC Framework ###
 * An Model-View-Controller (MVC) framework for PHP/MySQL (LAMP Stack)
-* Includes Vagrant Bootstrap file for spinning up a LAMP server on Ubuntu with Apache, MySQL, PHP-7.1 with dependencies.
+* Detailed documentation installed with the framework beyond the summary below.
 
 ### Easy Setup ###
 
@@ -17,9 +17,9 @@
 
 ## Documentation
 
-## Introduction
+## Preface
 
-In object-oriented programming development, model-view-controller (MVC) is the name of a methodology or design pattern for successfully and efficiently relating the user interface to underlying data models.
+A model-view-controller (MVC) framework is a design pattern for successfully and efficiently relating the user interface to underlying data models.
 
 The MVC pattern has been heralded by many developers as a useful pattern for the reuse of object code and a pattern that allows them to significantly reduce the time it takes to develop applications with user interfaces.
 
@@ -34,6 +34,13 @@ The model-view-controller pattern has three main components or objects to be use
 * A general understanding of Object-Oriented Programming using PHP.
 T* he PHP PDO-Library for database connectivity.
 * PHP-5.6 > (but future enhancements are leaning towards php7)
+
+## Running this MVC Framework on your local computer
+
+The root of this installation contains the following files for spinning up a local Virtual Server on your computer. While neither are a requirement, just a nice convienence, you can load this MVC Framework on any compatible hosting environment.
+
+* A "Dockerfile" for running a Docker Container with Ubuntu/Apache/PHP-7.2
+* A "bootstrap.sh" shell script for building a Vagrant Virtual Machine with Ubuntu/Apache/PHP-7.2/MySQL
 
 ## Features of this MVC Framework
 
@@ -203,35 +210,54 @@ Our Controller might look like the following:
 ```
 class User extends Controller {
 
+    public function __construct()
+    {
+        // Load the View Helper other methods in the Class will need.
+        $this->load_helper(['view']);
+        // You can also preload Models as properties of a Controller Class 
+        // if they are frequently used by Methods, however, it's more efficent 
+        // to instanciate a Model from within the method, as shown below.
+    }
+
     // Load the Home Page if the URL does not specify a method
     public function index()
     {
         $this->view('home/index');
     }
 
-    // Show our User Profile report
+    // Get some User data and pass it into the View "user_profile".
     public function report($user_id)
     {
         // Load the User Model so that we can query the database
         $user = $this->model('User');
+
         // Get this user
         $bind = [':id' => $user_id];
-        $data = $user->select('users','id = :id', $bind);
-        // Load the View passing to it the Users information as $data.
+        $records = $user->select('users','id = :id', $bind);
+
+        // Prepare the values we will pass into the View.
+        $data = [
+            'users' => $records;
+            'is_admin' => 'yes' // some other arbitrary value.
+        ];
+
+        // Load the View. 
+        // The second atribute $data is optional and only required 
+        // when passing data into a View.
         $this->view('reports/user_profile', $data);
     }
 }
 ```
 
-Let's assume the record returned from the above query for the user had the following data:
+Let's assume the we received back the following data when accessing http://my-domain.com/user/report
 ```
 ['name' => 'Bob Smith', 'age' => '24', 'email' => 'bobsmith@example.com']
 ```
 
 Within your View file you could access these values in one of two ways:
 
-As the key-name of the $data array, or
-as a variable name directly.
+As the key-name of the $data array,
+or as a magically-generated PHP variable.
 
 ```
 echo $data['name'] // outputs "Bob Smith"
@@ -262,6 +288,7 @@ class Docs extends Controller()
     public function session()
     {
         // Add the following line to enable database sessions.
+        // You do NOT need to call session_start() before using PHP sessions.
         $session = $this->model('Session');
 
         // Use PHP Sessions like normal.

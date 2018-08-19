@@ -13,9 +13,9 @@
 
 <h3>Welcome</h3>
 
-<p>If see this page then the installation of this framework appears to be working fine.</p>
+<p>This MVC Framework is working if you are seeing this page.</p>
 
-<p>Begin learning how to implement this MVC Framework by reading <a href="/docs">the documents page here</a> </p>
+<p>Begin learning how to implement this MVC Framework by reading the <a href="/docs">documentation</a>.</p>
 
 <?php extend_view(['common/footer'], $data) ?>
 <?php load_script(['prism', 'main']); ?>

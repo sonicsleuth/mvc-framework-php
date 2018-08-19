@@ -14,10 +14,8 @@
 function extend_view($paths, $data)
 {
     // Set each index of data to its named variable.
-    if( count($data) > 0 && is_array($data[0] ) )  {
-        foreach($data[0] as $key => $value) {
-            $$key = $value;
-        }
+    foreach($data as $key => $value) {
+        $$key = $value;
     }
 
     foreach ($paths as $path) {

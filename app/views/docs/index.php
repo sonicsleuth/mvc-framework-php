@@ -11,9 +11,9 @@
 <body>
 <?php extend_view(['common/header'], $data) ?>
 
-<h3>Introduction</h3>
+<h3>Preface</h3>
 <p>
-    In object-oriented programming development, model-view-controller (MVC) is the name of a methodology or design
+    A model-view-controller (MVC) framework is a design
     pattern for successfully and efficiently relating the user interface to underlying data models.
 </p>
 <p>
@@ -35,11 +35,19 @@
 <h3>Requirements</h3>
 <ul>
     <li>A general understanding of Object-Oriented Programming using PHP.</li>
-    <li>Optimize for PHP-7.2, but will run PHP-5.6+</li>
+    <li>Optimize for PHP-7.2, but will run PHP-5.6 with a few adjustments as noted.</li>
     <li>The PHP PDO-Library for database connectivity. <br />
         <em>If using less-than PHP-7.2, uncomment lines 19, 20 of /app/core/Model.php (ie: the USE PDO lines) </em>
     </li>
-    
+
+<h3>Running this MVC Framework on your local computer</h3>
+<p>
+The root of this installation contains the following files for spinning up a local Virtual Server on your computer. While neither
+are a requirement, just a nice convienence, you can load this MVC Framework on any compatible hosting environment.
+</p>
+<ul>
+    <li>A "Dockerfile" for running a Docker Container with Ubuntu/Apache/PHP-7.2
+    <li>A "bootstrap.sh" shell script for building a Vagrant Virtual Machine with Ubuntu/Apache/PHP-7.2/MySQL
 </ul>
 
 <h3>Features of this MVC Framework</h3>
@@ -275,6 +283,10 @@ extend_view(['common/footer'], $data)</code></pre>
 extend_view(['reports/weekly/common/header'], $data)</code></pre>
 <p>
 
+<p>
+For a comprehensive example of passing data into a View, see: <a href="/examples/passing_data">Example for passing values into Views</a>.
+</p>
+
 <h3>Controllers</h3>
 <p>
     To understand how Controllers work we need to back up a little bit and recall how we format a URL. For this example
@@ -285,7 +297,17 @@ extend_view(['reports/weekly/common/header'], $data)</code></pre>
     Our URL could have this form, where we are requiring the "User" Controller class and passing into the "report" method the value of "123" (the user id).
 </p>
 <p>Our Controller might look like the following:</p>
-<pre><code class="language-php">class User extends Controller {
+<pre><code class="language-php">
+class User extends Controller {
+
+    public function __construct()
+    {
+        // Load the View Helper other methods in the Class will need.
+        $this->load_helper(['view']);
+        // You can also preload Models as properties of a Controller Class 
+        // if they are frequently used by Methods, however, it's more efficent 
+        // to instanciate a Model from within the method, as shown below.
+    }
 
     // Load the Home Page if the URL does not specify a method
     public function index()
@@ -293,29 +315,40 @@ extend_view(['reports/weekly/common/header'], $data)</code></pre>
         $this->view('home/index');
     }
 
-    // Show our User Profile report
+    // Get some User data and pass it into the View "user_profile".
     public function report($user_id)
     {
         // Load the User Model so that we can query the database
         $user = $this->model('User');
+
         // Get this user
         $bind = [':id' => $user_id];
-        $data = $user->select('users','id = :id', $bind);
-        // Load the View passing to it the Users information as $data.
+        $records = $user->select('users','id = :id', $bind);
+
+        // Prepare the values we will pass into the View.
+        $data = [
+            'users' => $records;
+            'is_admin' => 'yes' // some other arbitrary value.
+        ];
+
+        // Load the View. 
+        // The second atribute $data is optional and only required 
+        // when passing data into a View.
         $this->view('reports/user_profile', $data);
     }
-}</code></pre>
+}
+</code></pre>
 <br>
 <p>
-    Let's assume the record returned from the above query for the user had the following data:
+    Let's assume the we received back the following data when accessing http://my-domain.com/user/report
 </p>
 <pre><code class="language-text">['name' => 'Bob Smith', 'age' => '24', 'email' => 'bobsmith@example.com']</code></pre>
 <br>
 <p>
     Within your View file you could access these values in one of two ways:
     <ul>
-    <li>As the key-name of the $data array, or</li>
-    <li>as a variable name directly.</li>
+    <li>As the key-name of the $data array,</li>
+    <li>or as a magically-generated PHP variable.</li>
 </ul>
 </p>
 <pre><code class="language-php">echo $data['name'] // outputs "Bob Smith"
@@ -323,6 +356,11 @@ echo $name // also outputs "Bob Smith"</code></pre>
 <p>
     <strong>Why offer both options?</strong> because developers have preferences on style.
 </p>
+
+<p>
+For a comprehensive example of passing data into a View, see: <a href="/examples/passing_data">Example for passing values into Views</a>.
+</p>
+
 <p>
     <strong>Note:</strong>
     <ul>
@@ -343,8 +381,12 @@ The Session Model will initally check if a Session Cookie exists, and if so, the
 in the database. If no Session Cookie exists, then a new Session database record and cookie will be generated.
 </p>
 <p>
-The following example is available by visiting here: <a href="/docs/session">/docs/session</a> 
-<br />Note: You must first set up your database, see below.
+Run the following example from here: <a href="/docs/session">/docs/session</a>, then reference:
+<ul>
+<li>/app/controllers/Docs/Docs.php - function session()
+<li>/app/models/Sessions.php
+</ul>
+<br />Note: You must first set up your database, see "setting up your database" below.
 </p>
 <pre><code class="language-php">
 class Docs extends Controller() 
@@ -352,6 +394,7 @@ class Docs extends Controller()
     public function session()
     {
         // Add the following line to enable database sessions.
+        // You do NOT need to call session_start() before using PHP sessions.
         $session = $this->model('Session');
 
         // Use PHP Sessions like normal.

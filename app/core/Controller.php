@@ -34,10 +34,8 @@ class Controller
         {
             // Set each index of data to its named variable.
             if( count($data) > 0 ) {
-                if( is_array($data[0]) ) {
-                    foreach($data[0] as $key => $value) {
-                        $$key = $value;
-                    }
+                foreach($data as $key => $value) {
+                    $$key = $value;
                 }
             }
             require_once VIEWS_PATH . $view . '.php';
