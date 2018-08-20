@@ -238,9 +238,37 @@ the “product_lookup_by_id” method passing in the match as a variable to the 
     <strong>Important!</strong> The Base Model performs automatic mapping of table columns names to the key-names of
     the data array you pass into it.  Any key-names not matching a table column name will be dropped.
 </p>
+
 <p>
-    <strong>Note</strong> There is an example <strong>User</strong> class model in the Models directory.
+    <strong>Important!</strong> A Model that returns records from a database query will always return an array(array) 
+    even for a single record, and FALSE if no records are returned.  For example: 
 </p>
+
+<pre><code class="language-php">// Return two or more records.
+$users = $user->select('users','dept = 12');
+$print_r($users);
+// OUTPUT:
+array(
+    [0] => array('name' => 'Bob', 'dept' => '12'),
+    [1] => array('name' => 'Mary', 'dept' => '12'),
+    [2] => array('name' => 'Sue', 'dept' => '12'),
+)
+
+// Return one record.
+$user = $user->select('users','id = 100');
+$print_r($user);
+// OUTPUT:
+array(
+    [0] => array('name' => 'Bob', 'id' => '12')
+)
+
+// Display values from this single record.
+// Note we have to access index [0] of the inner array for the value.
+echo "Welcome " . $user[0]['name']; 
+// OUTPUT
+Welcome Bob
+</code></pre>
+
 
 <h3>Views</h3>
 <p>

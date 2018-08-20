@@ -166,7 +166,62 @@ class User extends Model
 
     public function getUsers()
     {
+        /* get all users */
+        $results = $this->db->select("users");
+    }
+
+    public function getMaleUsers()
+    {
+        /* get a specific user */
+        $results = $this->db->select("users", "Gender = 'male'");
+    }
+
+    public function addUser($fname, $lname, $age, $gender)
+    {
+        /* add a new user */
+        $data = [
+                "fname"  => $fname,
+                "lname"  => $lname,
+                "age"    => $age,
+                "gender" => $gender
+                ];
+        $this->db->insert("users", $data);
+    }
+}
 ```
+
+The Base Model class is fully commented providing all the standard Create, Read, Update, Delete functionality.
+
+Important! The Base Model performs automatic mapping of table columns names to the key-names of the data array you pass into it. Any key-names not matching a table column name will be dropped.
+
+Important! A Model that returns records from a database query will always return an array(array) even for a single record, and FALSE if no records are returned. For example:
+
+```
+// Return two or more records.
+$users = $user->select('users','dept = 12');
+$print_r($users);
+// OUTPUT:
+array(
+    [0] => array('name' => 'Bob', 'dept' => '12'),
+    [1] => array('name' => 'Mary', 'dept' => '12'),
+    [2] => array('name' => 'Sue', 'dept' => '12'),
+)
+
+// Return one record.
+$user = $user->select('users','id = 100');
+$print_r($user);
+// OUTPUT:
+array(
+    [0] => array('name' => 'Bob', 'id' => '12')
+)
+
+// Display values from this single record.
+// Note we have to access index [0] of the inner array for the value.
+echo "Welcome " . $user[0]['name']; 
+// OUTPUT
+Welcome Bob
+```
+
 ## Views
 
 Views are the presentation part of the MVC pattern and as such they define design/layout of the page. A typical View might look like the following:

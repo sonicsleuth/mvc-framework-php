@@ -11,6 +11,8 @@
 <body>
 <?php extend_view(['common/header'], $data) ?>
 
+<a href="/docs">Return to Documenation</a>
+
 <h3>Example - Passing values from a Controller into a View</h3>
 
 <p>Examine the following files for details:</p>

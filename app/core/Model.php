@@ -124,11 +124,9 @@ class Model extends PDO {
 
         if(empty($data)) {
             return false;
-        } elseif (count($data[0]) > 1) {
-            return $data; // return full index of records.
-        } else {
-            return $data[0]; // return single record.
         }
+
+        return $data;
     }
 
     /**
