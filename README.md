@@ -219,7 +219,7 @@ Employee: Mary
 Employee: Sue
 ```
 
- selectOne() - Use this method this method to return a single record. For example:
+ selectOne() - Use this method to return a single record. For example:
 
 ```
 // Use selectOne() to return a single record.
