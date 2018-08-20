@@ -240,11 +240,12 @@ the “product_lookup_by_id” method passing in the match as a variable to the 
 </p>
 
 <p>
-    <strong>Important!</strong> A Model that returns records from a database query will always return an array(array) 
-    even for a single record, and FALSE if no records are returned.  For example: 
+    <strong>Selecting Records:</strong> There are two methods available for selecting records.
 </p>
-
-<pre><code class="language-php">// Return two or more records.
+<p>
+<strong>select()</strong> - Use this method to return multiple records. For example:
+</p>
+<pre><code class="language-php">// Use select() to return multiple records.
 $users = $user->select('users','dept = 12');
 $print_r($users);
 // OUTPUT:
@@ -254,17 +255,28 @@ array(
     [2] => array('name' => 'Sue', 'dept' => '12'),
 )
 
-// Return one record.
-$user = $user->select('users','id = 100');
+// Loop thru a set of records.
+foreach($users as $user) {
+    echo "Employee: " . $user['name'] . "\r\n";
+}
+// OUTPUT
+Employee: Bob
+Employee: Mary
+Employee: Sue
+</code></pre>
+<br>
+
+<p>
+    <strong>selectOne()</strong> - Use this method this method to return a single record. For example:</li>
+</p>
+<pre><code class="language-php">// Use selectOne() to return a single record.
+$user = $user->selectOne('users','id = 100');
 $print_r($user);
 // OUTPUT:
-array(
-    [0] => array('name' => 'Bob', 'id' => '12')
-)
+array('name' => 'Bob', 'id' => '12')
 
 // Display values from this single record.
-// Note we have to access index [0] of the inner array for the value.
-echo "Welcome " . $user[0]['name']; 
+echo "Welcome " . $user['name']; 
 // OUTPUT
 Welcome Bob
 </code></pre>
@@ -349,13 +361,14 @@ class User extends Controller {
         // Load the User Model so that we can query the database
         $user = $this->model('User');
 
-        // Get this user
+        // Get this user. 
+        // Use the selectOne() method for single record returns.
         $bind = [':id' => $user_id];
-        $records = $user->select('users','id = :id', $bind);
+        $record = $user->selectOne('users','id = :id', $bind);
 
         // Prepare the values we will pass into the View.
         $data = [
-            'users' => $records;
+            'users' => $record;
             'is_admin' => 'yes' // some other arbitrary value.
         ];
 

@@ -13,6 +13,8 @@
  * @update 1.0.7 HTML Entities returned from the database will be decoded by default when calling select() or run() methods.
  * 
  * @update 1.0.8 Return FALSE if no data found when using select() method.
+ * 
+ * @update 1.0.9 Added selectOne() method for single record queries.
  */
 
 /* PDO is automatically included in PHP 7.2+, otherwise uncomment the following lines.
@@ -45,12 +47,8 @@ class Model extends PDO {
     }
 
     /**
-     * @param $sql
-     * @param string $bind
-     * @param bool $entity_decode
-     *
-     * @return bool|int
-     *
+     * run()
+     * 
      * This method is used to run free-form SQL statements that can't be handled by the included delete, insert, select,
      * or update methods. If no SQL errors are produced, this method will return the number of affected rows for
      * DELETE, INSERT, and UPDATE statements, or an object of results for SELECT, DESCRIBE, and PRAGMA statements.
@@ -88,14 +86,8 @@ class Model extends PDO {
     }
 
     /**
-     * @param $table
-     * @param string $where
-     * @param string $bind
-     * @param string $fields
-     * @param bool $entity_decode
-     *
-     * @return bool|int
-     *
+     * select()
+     * 
      * Example #1
      * $results = $this->db->select("mytable");
      *
@@ -130,9 +122,31 @@ class Model extends PDO {
     }
 
     /**
-     * @param string $sql
-     * @param string $bind
-     * @param bool $entity_decode
+     * selectOne()
+     * 
+     * Use this method in place of select() when you want to return a single record.
+     * 
+     * This method functions identically as select() accept it returns the results as a single array
+     * and will LIMIT the results to the first record found.
+     */
+    public function selectOne($table, $where = "", $bind = "", $fields = "*", $entity_decode = true)
+    {
+        $sql = "SELECT " . $fields . " FROM " . $table;
+        if (!empty($where))
+            $sql .= " WHERE " . $where . " LIMIT 1";
+        $sql .= ";";
+
+        $data = $this->run($sql, $bind, $entity_decode);
+
+        if(empty($data)) {
+            return false;
+        }
+
+        return $data[0];
+    }
+
+    /**
+     * selectExtended()
      * 
      * Use this method when complex SQL statements are required, like table JOINS, are required.
      * 
@@ -158,11 +172,8 @@ class Model extends PDO {
     }
 
     /**
-     * @param $table
-     * @param $info
-     *
-     * @return bool|int
-     *
+     * insert()
+     * 
      * If no SQL errors are produced, this method will return the number of rows affected by the INSERT statement.
      *
      * Example #1:
@@ -186,14 +197,9 @@ class Model extends PDO {
     }
 
     /**
-     * @param $table
-     * @param $info
-     * @param $where
-     * @param string $bind
-     *
+     * update()
+     * 
      * If no SQL errors are produced, this method will return the number of rows affected by the UPDATE statement.
-     *
-     * @return bool|int
      *
      * Example #1
      * $update = array(
@@ -235,10 +241,8 @@ class Model extends PDO {
     }
 
     /**
-     * @param $table
-     * @param $where
-     * @param string $bind
-     *
+     * delete()
+     * 
      * If no SQL errors are produced, this method will return the number of rows affected by the DELETE statement.
      *
      * Method #1
@@ -259,11 +263,8 @@ class Model extends PDO {
 
 
     /**
-     * @param $table
-     * @param $info
-     *
-     * @return array
-     *
+     * filter()
+     * 
      * Automated table binding for MySql or SQLite.
      */
     private function filter($table, $info)
@@ -294,12 +295,9 @@ class Model extends PDO {
     }
 
     /**
-     * @param $bind
-     *
-     * @return array
-     *
-     * Insure we have an array to work with.
-     *
+     * cleanup()
+     * 
+     * Ensure we have an array to work with.
      */
     private function cleanup($bind)
     {
@@ -314,6 +312,8 @@ class Model extends PDO {
     }
 
     /**
+     * setErrorCallbackFunction()
+     * 
      * The error message can then be displayed, emailed, etc within the callback function.
      *
      * Example:
@@ -350,6 +350,8 @@ class Model extends PDO {
 
 
     /**
+     * debug()
+     * 
      * A better PDO debugger, just because.
      */
     private function debug()
@@ -393,8 +395,6 @@ class Model extends PDO {
     }
 
     /**
-     * @param $msg
-     *
      * Simple Callback Function.
      */
     public function basicCallbackFunction($msg) {
