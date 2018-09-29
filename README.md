@@ -53,33 +53,33 @@ The root of this installation contains the following files for spinning up a loc
 * An Organized Directory Structure where public access is separated from the core application.
 
 ```
-root
-    /app
-        /config
-            /config.php - app configuration
-            /database.php - settings to connect to your database
-            /routes.php - custom URL routing patterns
-        /controllers
+root/
+    app/
+        config/
+            config.php - app configuration
+            database.php - settings to connect to your database
+            routes.php - custom URL routing patterns
+        controllers/
             Docs.php - the controller serving up this documentation
-        /core
+        core/
             App.php - all the magic
             Controller.php - Base controller
             Model.php - Base model
-        /helpers
+        helpers/
             view.php
-        /models
+        models/
             Users.php - a sample data model
             Sessions.php - database managed PHP Sessions
-        /views
-            /common
+        views/
+            common/
                 footer.php - footer of this page
                 header.php - header of this page
-            /docs
+            docs/
                 index.php - this page
         init.php
-    /public
-        /css - your styles
-        /js - your scripts
+    public/
+        css/ - your styles
+        js/ - your scripts
         index.php - the front-loader and environment configurations
         .htaccess - URL routing to the front-loader
 ```
