@@ -78,7 +78,7 @@ class App
              * as /class/priavte-method/param
              */
             //if(method_exists($this->controller, $this->url[$this->method_index]))
-            if(is_callable(array($this->controller, $this->url[$this->method_index]))
+            if(is_callable(array($this->controller, $this->url[$this->method_index])))
             {
                 $this->method = $this->url[$this->method_index];
                 unset($this->url[$this->method_index]);
