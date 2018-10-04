@@ -72,7 +72,13 @@ class App
         // Set Method or use default.
         if(isset($this->url[$this->method_index]))
         {
-            if(method_exists($this->controller, $this->url[$this->method_index]))
+            /**
+             * Changed from method_exists() to is_callable() allowing for Classes
+             * to offer Private methods that cannot be invoked by dynamic URLs such
+             * as /class/priavte-method/param
+             */
+            //if(method_exists($this->controller, $this->url[$this->method_index]))
+            if(is_callable(array($this->controller, $this->url[$this->method_index]))
             {
                 $this->method = $this->url[$this->method_index];
                 unset($this->url[$this->method_index]);
