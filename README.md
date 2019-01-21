@@ -40,11 +40,10 @@ The model-view-controller pattern has three main components or objects to be use
 
 The root of this installation contains the following files for spinning up a local Virtual Server on your computer. While neither are a requirement, just a nice convienence, you can load this MVC Framework on any compatible hosting environment.
 
-- A "Dockerfile" for running a Docker Container with Ubuntu/Apache/PHP-7.2
-  - Build the new image using the command docker build <path>. Path refers to the directory containing the Dockerfile.
-  - At the end of the process you should see the message “Successfully built <image ID>”
-  - Start the new image and test connectivity to NGINX. Run the command docker run -p 80:80 <image ID>. The option -p 80:80 exposes the Container port 80 as the Host port 80 to the world.
-  - Open a browser and go to: http://localhost or http://localhost:80
+- A "Dockerfile" for running a Docker Container with Ubuntu/Apache/PHP-7.1.8
+  - Run "docker-compose up" from the directory containing root/docker-compose.yml file.
+  - Open a browser and go to: http://localhost
+  - You do not have to stop/start the Docker container while editing code. Updates are relected in realtime.
 - A "bootstrap.sh" shell script for building a Vagrant Virtual Machine with Ubuntu/Apache/PHP-7.2/MySQL
 
 ## Features of this MVC Framework

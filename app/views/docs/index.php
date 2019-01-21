@@ -47,6 +47,11 @@ are a requirement, just a nice convienence, you can load this MVC Framework on a
 </p>
 <ul>
     <li>A "Dockerfile" for running a Docker Container with Ubuntu/Apache/PHP-7.2
+        <ul>
+            <li>Run "docker-compose up" from the directory containing root/docker-compose.yml file.
+            <li>Open a browser and go to: http://localhost or http://localhost:80
+            <li>You do not have to stop/start the Docker container while editing code. Updates are relected in realtime.
+        </ul>
     <li>A "bootstrap.sh" shell script for building a Vagrant Virtual Machine with Ubuntu/Apache/PHP-7.2/MySQL
 </ul>
 
