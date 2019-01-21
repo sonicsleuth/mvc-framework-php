@@ -108,8 +108,9 @@ class Model extends PDO {
     public function select($table, $where = "", $bind = "", $fields = "*", $entity_decode = true)
     {
         $sql = "SELECT " . $fields . " FROM " . $table;
-        if (!empty($where))
+        if (!empty($where)) {
             $sql .= " WHERE " . $where;
+        }  
         $sql .= ";";
 
         $data = $this->run($sql, $bind, $entity_decode);
@@ -132,8 +133,9 @@ class Model extends PDO {
     public function selectOne($table, $where = "", $bind = "", $fields = "*", $entity_decode = true)
     {
         $sql = "SELECT " . $fields . " FROM " . $table;
-        if (!empty($where))
+        if (!empty($where)) {
             $sql .= " WHERE " . $where . " LIMIT 1";
+        }
         $sql .= ";";
 
         $data = $this->run($sql, $bind, $entity_decode);
@@ -190,8 +192,9 @@ class Model extends PDO {
         $fields = $this->filter($table, $info);
         $sql    = "INSERT INTO " . $table . " (" . implode($fields, ", ") . ") VALUES (:" . implode($fields, ", :") . ");";
         $bind   = array();
-        foreach ($fields as $field)
+        foreach ($fields as $field) {
             $bind[":$field"] = $info[$field];
+        }
 
         return $this->run($sql, $bind);
     }
@@ -227,16 +230,18 @@ class Model extends PDO {
 
         $sql = "UPDATE " . $table . " SET ";
         for ($f = 0; $f < $fieldSize; ++$f) {
-            if ($f > 0)
+            if ($f > 0) {
                 $sql .= ", ";
+            } 
             $sql .= $fields[$f] . " = :update_" . $fields[$f];
         }
         $sql .= " WHERE " . $where . ";";
 
         $bind = $this->cleanup($bind);
-        foreach ($fields as $field)
+        foreach ($fields as $field) {
             $bind[":update_$field"] = $info[$field];
-
+        }
+        
         return $this->run($sql, $bind);
     }
 
@@ -360,33 +365,40 @@ class Model extends PDO {
         if (!empty($this->errorCallbackFunction)) {
 
             $error = array("Error" => $this->error);
-            if (!empty($this->sql))
+            if (!empty($this->sql)) {
                 $error["SQL Statement"] = $this->sql;
-            if (!empty($this->bind))
+            }
+                
+            if (!empty($this->bind)) {
                 $error["Bind Parameters"] = trim(print_r($this->bind, true));
+            }
 
             $backtrace = debug_backtrace();
             if (!empty($backtrace)) {
                 foreach ($backtrace as $info) {
-                    if ($info["file"] != __FILE__)
+                    if ($info["file"] != __FILE__) {
                         $error["Backtrace"] = $info["file"] . " at line " . $info["line"];
+                    }
                 }
             }
 
             $msg = "";
             if ($this->errorMsgFormat == "html") {
-                if (!empty($error["Bind Parameters"]))
+                if (!empty($error["Bind Parameters"])) {
                     $error["Bind Parameters"] = "<pre>" . $error["Bind Parameters"] . "</pre>";
+                }
                 $css = trim(file_get_contents(dirname(__FILE__) . $this->errorCssPath)); // set this path
                 $msg .= '<style type="text/css">' . "\n" . $css . "\n</style>";
                 $msg .= "\n" . '<div class="db-error">' . "\n\t<h3>SQL Error</h3>";
-                foreach ($error as $key => $val)
+                foreach ($error as $key => $val) {
                     $msg .= "\n\t<label>" . $key . ":</label>" . $val;
+                }
                 $msg .= "\n\t</div>\n</div>";
             } elseif ($this->errorMsgFormat == "text") {
                 $msg .= "SQL Error\n" . str_repeat("-", 50);
-                foreach ($error as $key => $val)
+                foreach ($error as $key => $val) {
                     $msg .= "\n\n$key:\n$val";
+                } 
             }
 
             $func = $this->errorCallbackFunction;
