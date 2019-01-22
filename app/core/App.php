@@ -53,28 +53,30 @@ class App
          */
         $this->url = $this->parseUrl($config, $route);
 
+        // Set Language if specified in the URL or set the default language.
+        if(count($this->url) >= 1) {
+            $first_url_segment = $this->url[0];
+        } else {
+            $first_url_segment = '';
+        }
+        if(in_array($first_url_segment, $config['available_languages'])) {
+            if(file_exists(LANGUAGE_PATH . strtolower($first_url_segment) . '_lang.php')) {
+                require_once(LANGUAGE_PATH . strtolower($first_url_segment) . '_lang.php');
+                setcookie("language", strtolower($first_url_segment), time() + (60*60*24*30));
+                unset($this->url[0]);
+            } 
+        } else {
+            if(file_exists(LANGUAGE_PATH . strtolower($this->default_language) . '_lang.php') && !defined('LANG')) {
+                require_once(LANGUAGE_PATH . strtolower($this->default_language) . '_lang.php');
+                setcookie("language", 'en', time() + (60*60*24*30));
+            } 
+        }
+
         // Set Controller or use default Controller.
         // Walk down the URL assuming the previous index may be a directory under Controllers.
         $controller_exists = false;
         foreach($this->url as $key => $value )
         {
-            // Set Language if specified in the URL or set the default language.
-            if(in_array($value, $config['available_languages'])) {
-                if(file_exists(LANGUAGE_PATH . strtolower($value) . '_lang.php')) {
-                    require_once(LANGUAGE_PATH . strtolower($value) . '_lang.php');
-                    setcookie("language", strtolower($value), time() + (60*60*24*30));
-                    unset($this->url[$key]);
-                    continue;
-                } 
-            } else {
-                if(file_exists(LANGUAGE_PATH . strtolower($this->default_language) . '_lang.php') && !defined('LANG')) {
-                    require_once(LANGUAGE_PATH . strtolower($this->default_language) . '_lang.php');
-                    setcookie("language", 'en', time() + (60*60*24*30));
-                } 
-            }
-
-
-            // Set Controller
             $this->controller_endpoint .= $this->dashesToCamelCase($value);
 
             if(file_exists(CONTROLLERS_PATH . $this->controller_endpoint . '.php')) {

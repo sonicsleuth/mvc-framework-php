@@ -27,6 +27,9 @@
 
 <p>Notice how each URL after http://localhost begins with the language specifier /en/ /fr/ /sp/</p>
 
+<p style="color:red;">NOTE: If a language URL segment <i>does not match</i> a language dictionary file within the 
+<strong>/app/languages/</strong> directory, then the default Home page will load. Example: http://domain.com/<strong>xx</strong>/user/1</p>
+
 <p>You can specify the default Language and Available Languages in the <strong>/app/config/config.php</strong> file:</p>
 
 <pre><code class="language-php">$config['default_language'] = 'en';
