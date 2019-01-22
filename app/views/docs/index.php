@@ -73,6 +73,8 @@ are a requirement, just a nice convienence, you can load this MVC Framework on a
     </li>
     <li>
         An <strong>Organized Directory Structure</strong> where public access is separated from the core application.
+    </li>
+    <li>Support for <strong>Multiple Languages</strong> specified by URL's, like: www.domain.com/<strong>en</strong>/user/123</li>
 <pre><code class="language-text">root
     /app
         /config
@@ -87,6 +89,10 @@ are a requirement, just a nice convienence, you can load this MVC Framework on a
             Model.php - Base model
         /helpers
             view.php
+        /languages
+            en_lang.php
+            fr_lang.php
+            sp_lang.php
         /models
             Users.php - a sample data model
         /views
@@ -135,7 +141,7 @@ has a product ID. To overcome routes allow you to remap the URI handler.
 <p>
 <strong>WILDCARDS</strong><br>
 A typical wildcard route might look something like this:
-<pre><code class="language-text">$route['product/:num'] = 'catalog/product_lookup/$1';</code></pre>
+<pre><code class="language-php">$route['product/:num'] = 'catalog/product_lookup/$1';</code></pre>
 </p>
 <p>
 In a route, the array key contains the URI to be matched, while the array value contains the destination it should
@@ -154,7 +160,7 @@ as are back-references. If you use back-references you must use the dollar synta
 </p>
 <p>
     A typical RegEx route might look something like this:</p>
-<pre><code class="language-text">$route['products/([a-z]+)/(\d+)'] = '$1/id_$2';</code></pre>
+<pre><code class="language-php">$route['products/([a-z]+)/(\d+)'] = '$1/id_$2';</code></pre>
 <p>
     In the above example, a URI similar to products/shirts/123 would instead call the “shirts” controller class
 and the “id_123” method.
@@ -175,15 +181,15 @@ and the “id_123” method.
 <strong>IMPORTANT!</strong> Do not use leading/trailing slashes.
 </p>
 <p><strong>EXAMPLES:</strong></p>
-<pre><code class="language-text">$route['journals'] = 'blogs';</code></pre>
+<pre><code class="language-php">$route['journals'] = 'blogs';</code></pre>
 <p>
 A URL containing the word “journals” in the first segment will be remapped to the “blogs” controller class.
 </p>
-<pre><code class="language-text">$route['product/(:any)'] = 'catalog/product_lookup/$1';</code></pre>
+<pre><code class="language-php">$route['product/(:any)'] = 'catalog/product_lookup/$1';</code></pre>
 <p>A URL with “product” as the first segment, and anything in the second will be remapped to the “catalog” controller class
 and the “product_lookup” method.
 </p>
-<pre><code class="language-text">$route['product/(:num)'] = 'catalog/product_lookup_by_id/$1';</code></pre>
+<pre><code class="language-php">$route['product/(:num)'] = 'catalog/product_lookup_by_id/$1';</code></pre>
 <p>A URL with “product” as the first segment, and a number in the second will be remapped to the “catalog” controller class and
 the “product_lookup_by_id” method passing in the match as a variable to the method.
 </p>
@@ -490,6 +496,11 @@ CREATE TABLE sessions (
         PRIMARY KEY (session_id)
     );
 </code></pre>
+
+
+<h3>Language Dictionaries</h3>
+
+<p>Information about creating a Multi-Language application <a href="/docs/language">can be found here.</a></p>
 
 
 <?php extend_view(['common/footer'], $data) ?>

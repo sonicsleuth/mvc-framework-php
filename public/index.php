@@ -70,6 +70,7 @@ $controllers_path   = '../app/controllers/';    // default: '../app/controllers/
 $models_path        = '../app/models/';         // default: '../app/models/'
 $views_path         = '../app/views/';          // default: '../app/models/'
 $helpers_path       = '../app/helpers/';        // default: '../app/helpers/'
+$language_path      = '../app/languages/';     // default: '../app/languages/'
 
 
 
@@ -94,6 +95,7 @@ define('CONTROLLERS_PATH', $controllers_path);
 define('MODELS_PATH', $models_path);
 define('VIEWS_PATH', $views_path);
 define('HELPERS_PATH', $helpers_path);
+define('LANGUAGE_PATH', $language_path);
 
 // Build front-loader
 require_once '../app/config/config.php';

@@ -33,4 +33,9 @@ class Docs extends Controller
 
     }
 
+    public function language()
+    {
+        $this->view('docs/language');
+    }
+
 }

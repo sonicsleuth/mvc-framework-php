@@ -10,6 +10,8 @@ class App
     protected $method = '';
     protected $params = [];
     protected $route = [];
+    protected $default_language = '';
+    protected $available_languages = [];
 
     public function __construct($config = [], $route = [])
     {
@@ -18,6 +20,13 @@ class App
          */
         $this->controller = $config['default_controller'];
         $this->method = $config['default_method'];
+
+        /*
+         * Set the default language and available languages that can be specified in the URL.
+         * Example: http://domain.com/en/user/1 (Where "en" is specifying English).
+         */
+        $this->default_language = $config['default_language'];
+        $this->available_languages = $config['available_languages'];
 
         /*
          * Parse the URL having the format of /controller/method/param1/param2 into an array.
@@ -49,6 +58,23 @@ class App
         $controller_exists = false;
         foreach($this->url as $key => $value )
         {
+            // Set Language if specified in the URL or set the default language.
+            if(in_array($value, $config['available_languages'])) {
+                if(file_exists(LANGUAGE_PATH . strtolower($value) . '_lang.php')) {
+                    require_once(LANGUAGE_PATH . strtolower($value) . '_lang.php');
+                    setcookie("language", strtolower($value), time() + (60*60*24*30));
+                    unset($this->url[$key]);
+                    continue;
+                } 
+            } else {
+                if(file_exists(LANGUAGE_PATH . strtolower($this->default_language) . '_lang.php') && !defined('LANG')) {
+                    require_once(LANGUAGE_PATH . strtolower($this->default_language) . '_lang.php');
+                    setcookie("language", 'en', time() + (60*60*24*30));
+                } 
+            }
+
+
+            // Set Controller
             $this->controller_endpoint .= $this->dashesToCamelCase($value);
 
             if(file_exists(CONTROLLERS_PATH . $this->controller_endpoint . '.php')) {

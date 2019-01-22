@@ -55,6 +55,7 @@ The root of this installation contains the following files for spinning up a loc
   - Call and API for report data: http://www.example.com/api/v1/sales-report
 - A Base Model which serves as an abstract to PDO and can be extended by any custom Model.
 - An Organized Directory Structure where public access is separated from the core application.
+- Support for Multiple Languagesspecified by URL's, like: www.domain.com/en/user/123
 
 ```
 root/
@@ -71,6 +72,10 @@ root/
             Model.php - Base model
         helpers/
             view.php
+        /languages
+            en_lang.php
+            fr_lang.php
+            sp_lang.php
         models/
             Users.php - a sample data model
             Sessions.php - database managed PHP Sessions
@@ -431,6 +436,51 @@ CREATE TABLE sessions (
         session_lastaccesstime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (session_id)
     );
+```
+
+## Language Dictionaries
+
+You can specify the default Language and Available Languages in the **/app/config/config.php** file:
+
+```
+$config['default_language'] = 'en';
+$config['available_languages'] = ['en', 'fr', 'sp'];
+```
+
+**Setting up Language Dictionaries**
+
+For each language setting in **\$config['available_languages']**, you must create a language specific file with a name format like **en_lang.php**
+and place it in the **/app/language/** directory. When you installed this framework three
+language dictionary files already exist to get you started - English, French, Spanish.
+
+```
+/app/languages/en_lang.php
+/app/languages/fr_lang.php
+/app/languages/sp_lang.php
+```
+
+You can define an unlimited number of Native-Language to Foreign-Language definitions within
+each language dictionary file as shown below. Create new language files as needed. Ensure each language
+file contains an identical list of Native-Language array keys for each Foreign-Language value as shown in the examples below.
+
+**/app/languages/en_lang.php**
+
+```
+define('LANG', [
+    'Welcome' => 'Welcome',
+    'Hello' => 'Hello',
+    'Subscribe' => 'Subscribe',
+]);
+```
+
+**Settings Links with the Current Language**
+
+Within your Controller or View file include the Language Helper file.
+Then pass the URL into the **language_url()** function as shown below.
+
+```
+require_once('../app/helpers/language.php');
+language_url('/doc/language'); // Output: http://localhost/en/doc/language
 ```
 
 (end of documentation)

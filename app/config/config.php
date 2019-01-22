@@ -59,3 +59,22 @@ $config['default_controller'] = 'Home';
 */
 $config['default_method'] = 'index';
 
+/*
+* --------------------------------------------------------------------------
+* Default Language
+* --------------------------------------------------------------------------
+* Sets the default Language when no language is found in the URL.
+* Example: http://domain.com/en/user/1
+* Available languages must be set in the $config['available_languages'] list.
+*/
+$config['default_language'] = 'en';
+
+/*
+* --------------------------------------------------------------------------
+* Available Languages
+* --------------------------------------------------------------------------
+* Sets a list of avilable language translator files located here: /app/language/en_lang.php
+* There must be a language file for each language specified in $config['available_languages']
+*/
+$config['available_languages'] = ['en', 'fr', 'sp'];
+
