@@ -68,7 +68,7 @@ class App
         } else {
             if(file_exists(LANGUAGE_PATH . strtolower($this->default_language) . '_lang.php') && !defined('LANG')) {
                 require_once(LANGUAGE_PATH . strtolower($this->default_language) . '_lang.php');
-                setcookie("language", 'en', time() + (60*60*24*30));
+                setcookie("language", $this->default_language, time() + (60*60*24*30));
             } 
         }
 
