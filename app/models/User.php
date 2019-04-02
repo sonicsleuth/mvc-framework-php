@@ -8,7 +8,8 @@ class User extends Model
 
     public function __construct()
     {
-       $this->db = new Model();
+        parent::__construct();
+        $this->db = new Model();
     }
 
     public function getName()

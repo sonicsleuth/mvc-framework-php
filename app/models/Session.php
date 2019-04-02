@@ -21,6 +21,8 @@ class Session extends Model
 
     public function __construct()
     {
+        parent::__construct();
+
         // Instantiate new Database object
         $this->db = new Model();
 
@@ -199,7 +201,7 @@ class Session extends Model
     /*
     Simple debugger for dumping all the Session data from the database.
     */
-    public function getSessionData()
+    function getSessionData()
     {
         $data = $this->db->select('sessions');
 
