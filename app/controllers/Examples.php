@@ -9,14 +9,14 @@
 
 class Examples extends Controller
 {
-    public function __construct()
+    function __construct()
     {
         $this->load_helper(['view']);
     }
 
     public function passing_data()
     {
-        $user = $this->model('User'); 
+        $user = $this->model('User');
 
         $users = $user->getUsers();
 

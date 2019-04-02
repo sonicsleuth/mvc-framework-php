@@ -4,7 +4,7 @@ class Controller
 {
     /**
      * @param $model
-     * @return bool
+     * @return object|bool
      *
      * Load specified Model if the file exists.
      */
