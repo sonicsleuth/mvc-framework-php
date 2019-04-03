@@ -9,7 +9,7 @@
 
 class Examples extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->load_helper(['view']);
     }

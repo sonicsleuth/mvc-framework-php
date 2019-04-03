@@ -33,7 +33,7 @@ The model-view-controller pattern has three main components or objects to be use
 ## Requirements
 
 - A general understanding of Object-Oriented Programming using PHP.
-  T\* he PHP PDO-Library for database connectivity.
+  The PHP PDO-Library for database connectivity.
 - PHP-5.6 > (but future enhancements are leaning towards php7)
 
 ## Running this MVC Framework on your local computer
