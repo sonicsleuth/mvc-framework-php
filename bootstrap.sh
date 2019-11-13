@@ -13,7 +13,7 @@
 
 # ENABLE HTACCESS: 
 # Optional - If you are setting up a framework that is dependent on Apache .htaccess file 
-# then you must SSH into the Vagrant machine and add the fooling to the default VHOST file, 
+# then you must SSH into the Vagrant machine and add the following to the default VHOST file, 
 # then restart apache - "service apache2 restart".
 # ----------------------------
 # <Directory "/var/www/public">
