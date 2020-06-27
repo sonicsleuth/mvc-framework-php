@@ -1,5 +1,3 @@
-# mvc-framework-php
-
 # MVC Framework
 
 - An Model-View-Controller (MVC) framework for PHP/MySQL (LAMP Stack)
@@ -374,6 +372,20 @@ Why offer both options? because developers have preferences on style.
 - If your Controller class is located in a sub-directory within the **/apps/controllers/** directory you must specify it in the URL like so **/directory/user-history/method/param1/param2**
 
 However, you may also use custom routing to hide a sub-directory. See the **Routing** section above.
+
+## Global Variable and Constants
+
+Using global variables and constants within your application is done by requiring the **/helper/global.php** file within your Controller, as shown below, then addin your Constants and Variables-by-referenced functions. See the contents of **/helper/global.php** for examples of use.
+
+```
+class MyController extends Controller
+{
+    public function __construct()
+    {
+        $this->load_helper(['global_constants']);
+    }
+}
+```
 
 ## Sessions
 
