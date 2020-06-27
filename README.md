@@ -382,7 +382,7 @@ class MyController extends Controller
 {
     public function __construct()
     {
-        $this->load_helper(['global_constants']);
+        $this->load_helper(['globals']);
     }
 }
 ```
