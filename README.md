@@ -1,6 +1,6 @@
 # MVC Framework
 
-- An Model-View-Controller (MVC) framework for PHP/MySQL (LAMP Stack)
+- A Model-View-Controller (MVC) framework for PHP/MySQL (LAMP Stack)
 - Detailed documentation installed with the framework beyond the summary below.
 
 ### Easy Setup
