@@ -375,7 +375,7 @@ However, you may also use custom routing to hide a sub-directory. See the **Rout
 
 ## Global Variable and Constants
 
-Using global variables and constants within your application is done by requiring the **/helper/global.php** file within your Controller, as shown below, then addin your Constants and Variables-by-referenced functions. See the contents of **/helper/global.php** for examples of use.
+Using global variables and constants within your application is done by requiring the **/helper/global.php** file within your Controller, as shown below, then adding your Constants, Variables, Array, Etc to this helper file. See the contents of **/helper/global.php** for examples of use.
 
 ```
 class MyController extends Controller
