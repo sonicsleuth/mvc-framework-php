@@ -87,6 +87,17 @@ class App
                 break;
             }
 
+            // Depending on your server, directory paths may be case-sensitive.
+            // Configure the default here: /App/config.php
+            switch ($config['default_controller_path_case']) {
+                case 'lowercase':
+                    $this->controller_endpoint = strtolower($this->controller_endpoint);
+                    break;
+                case 'firstlettercap':
+                    $this->controller_endpoint = ucfirst($this->controller_endpoint);
+                    break;
+            }
+
             unset($this->url[$key]);
             $this->controller_endpoint .= '/';
         }

@@ -45,6 +45,16 @@ $config['charset'] = 'UTF-8';
 
 /*
 * --------------------------------------------------------------------------
+* Default Controller Sub-directory Filepath Case
+* --------------------------------------------------------------------------
+* Depending on your server setup, you may need to specify if directory paths 
+* are case-sensitive.
+* Options Are: lowercase, firstlettercap
+*/
+$config['default_controller_path_case'] = 'lowercase';
+
+/*
+* --------------------------------------------------------------------------
 * Default Controller
 * --------------------------------------------------------------------------
 * Sets the default Controller to call when no controller is found in the URL.
