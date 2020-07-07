@@ -450,6 +450,13 @@ CREATE TABLE sessions (
     );
 ```
 
+**About Buggy Sessions using the Google Chrome Browser**
+Issue 1: The Sessions table described above will record empty records.
+Issue 2: The website may appear to loose your Session cookie (aka: PHPSESSID).
+Cause: There is a known bug in Chrome that will loose track of your Session Cookie as a result of not having a fav.ico icon.
+Effect: When Chrome does not receive the fav icon upon request Chrome destroys the current Session cookie (aka: PHPSESSID).
+Solution: Add a fav.ico file into the Public root directory.
+
 ## Language Dictionaries
 
 You can specify the default Language and Available Languages in the **/app/config/config.php** file:
