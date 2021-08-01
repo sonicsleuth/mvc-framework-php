@@ -21,6 +21,9 @@ services:
       SESSION_DRIVER: redis
       CACHE_DRIVER: redis
   mysql:
+    # Aug-2021 A Fix for Docker (Apple Silicon/M1 Preview) MySQL "no matching manifest for linux/arm64/v8 in the manifest list entries"
+    # https://newbedev.com/docker-apple-silicon-m1-preview-mysql-no-matching-manifest-for-linux-arm64-v8-in-the-manifest-list-entries
+    platform: linux/x86_64
     image: mysql:5.7
     ports:
       - 3306:3306
